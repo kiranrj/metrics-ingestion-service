@@ -20,6 +20,12 @@ app.get("/health/ping", (req: Request, res: Response) => {
     res.status(200).send("pong");
 })
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`⚡️ [server]: Server is running http://localhost:${port}`);
 })
+console.log("Server started");
+
+process.on('SIGINT', () => {
+    console.log("Interrupted");
+    process.exit(0);
+});

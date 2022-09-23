@@ -5,7 +5,7 @@ import { MetricsType } from "../models/MetricsType";
 export class MetricRecordService {
     // dummy data for testing
     private readonly metricRecords: IMetricsRecords = {
-        "memory.usedHeap" : {
+        "base.memory.usedHeap" : {
             level: "base",
             name: "memory.usedHeap",
             type: MetricsType.GAUGE,
@@ -22,7 +22,7 @@ export class MetricRecordService {
     }
 
     post = async(metricRecord: MetricsRecord) : Promise<void> => {
-        this.metricRecords[metricRecord.name] = metricRecord;
+        this.metricRecords[`${metricRecord.level}.${metricRecord.name}`] = metricRecord;
     }
 
     delete = async(name: string): Promise<string | null> => {
