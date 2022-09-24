@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc -b src/metrics-collection",
+    "build": "npx tsc -b src/metrics-ingest && npx tsc -b src/metrics-ensemble",
     "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q ./dist/index.js\"",
     "node-dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
-    "distDocker": "npm run build && docker build --tag metrics-ingestion-service -f src/metrics-collection/Dockerfile ."
+    "distDocker": "npm run build && docker build --tag metrics-ingest -f src/metrics-ingest/Dockerfile . && docker build --tag metrics-ensemble -f src/metrics-ensemble/Dockerfile ."
   },
   "repository": {
     "type": "git",
