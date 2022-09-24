@@ -1,6 +1,6 @@
 
 import { Kafka, Producer } from "kafkajs";
-import { MetricsRecord } from "../models/MetricsRecord";
+import { MetricsRecord } from "../../common/models/MetricsRecord";
 
 export class KafkaProducer {
     private kafka: Kafka;

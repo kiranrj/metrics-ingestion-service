@@ -1,6 +1,6 @@
-import { MetricsRecord } from "../models/MetricsRecord";
-import { IMetricsRecords } from "../models/IMetricRecords";
-import { MetricsType } from "../models/MetricsType";
+import { MetricsRecord } from "../../common/models/MetricsRecord";
+import { IMetricsRecords } from "../../common/models/IMetricRecords";
+import { MetricsType } from "../../common/models/MetricsType";
 import { KafkaProducer } from "./KafkaProducer.service";
 
 export class MetricRecordService {
