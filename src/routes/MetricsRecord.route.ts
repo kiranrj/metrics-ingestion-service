@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express';
+import { MetricsRecord } from '../models/MetricsRecord';
 import { MetricRecordService } from '../services/MetricsRecord.service';
 
 export const router = express.Router();
@@ -35,10 +36,14 @@ export class MetricsRecordRoutes {
 
         this.app.post(`/data/metrics/`, async(req: Request, res: Response) => {
             try{
+                if (!req.body.name) {
+                    console.log("Empty input. Skipping");
+                    throw new TypeError("ERROR: empty input");
+                }
                 await this.service.post(req.body);
                 res.status(200).send(`Record ${req.body.name} UPDATED`);
-            } catch (e) {
-                res.status(500).send(e);
+            } catch (e: any) {
+                res.status(500).send(e.message);
             }
         });
 

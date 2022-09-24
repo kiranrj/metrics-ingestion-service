@@ -24,11 +24,13 @@
   "homepage": "https://github.com/kiranrj/metrics-ingestion-service#readme",
   "dependencies": {
     "dotenv": "^16.0.2",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "kafkajs": "^2.2.0"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.14",
+    "@types/kafkajs": "^1.9.0",
     "concurrently": "^7.4.0",
     "nodemon": "^2.0.20",
     "ts-node-dev": "^2.0.0",

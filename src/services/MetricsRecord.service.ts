@@ -1,8 +1,11 @@
 import { MetricsRecord } from "../models/MetricsRecord";
 import { IMetricsRecords } from "../models/IMetricRecords";
 import { MetricsType } from "../models/MetricsType";
+import { KafkaProducer } from "./KafkaProducer.service";
 
 export class MetricRecordService {
+    private readonly kafkaProducer: KafkaProducer = new KafkaProducer();
+
     // dummy data for testing
     private readonly metricRecords: IMetricsRecords = {
         "base.memory.usedHeap" : {
@@ -23,6 +26,7 @@ export class MetricRecordService {
 
     post = async(metricRecord: MetricsRecord) : Promise<void> => {
         this.metricRecords[`${metricRecord.level}.${metricRecord.name}`] = metricRecord;
+        await this.kafkaProducer.send(metricRecord);
     }
 
     delete = async(name: string): Promise<string | null> => {
