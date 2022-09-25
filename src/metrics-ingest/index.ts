@@ -1,7 +1,7 @@
 import express, {Express, Request, Response} from 'express';
 import dotenv from 'dotenv';
-import { MetricRecordRoutes } from './routes/MetricRecord.route';
-import { MetricRecordService } from './services/MetricRecord.service';
+import { MetricRecordRoutes } from './routes/MetricsRecord.route';
+import { MetricRecordService } from './services/MetricsRecord.service';
 
 dotenv.config();
 const port: number = parseInt(process.env.PORT as string);

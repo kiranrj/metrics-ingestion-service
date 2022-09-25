@@ -1,5 +1,5 @@
 import express, { Express, Request, Response } from 'express';
-import { MetricRecordService } from '../services/MetricRecord.service';
+import { MetricRecordService } from '../services/MetricsRecord.service';
 
 export const router = express.Router();
 
