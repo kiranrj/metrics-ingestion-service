@@ -1,5 +1,6 @@
 export enum MetricType {
     METER = "METER",
     GAUGE = "GAUGE",
-    COUNTER = "COUNTER"
+    COUNTER = "COUNTER",
+    TIMER = "TIMER"
 }

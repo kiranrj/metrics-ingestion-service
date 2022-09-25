@@ -21,13 +21,10 @@ export class NewMetricRecordHandler {
             console.log("Empty metricRecord skipping");
             return;
         }
-        console.log(`Kafka key #### ${key}`);
-        console.log(`Kafka message #### ${message}`);
 
         const metricRecord = JSON.parse(message);
 
         let metricKey = key ?? Utils.getRecordKey(metricRecord);
-        console.log(`Metric KEY #### ${metricKey}`);
         let metric = this.metricsDao.get(metricKey);
 
         if(!metric) {

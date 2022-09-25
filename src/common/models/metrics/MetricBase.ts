@@ -8,6 +8,7 @@ export abstract class MetricBase implements IMetric {
     type: MetricType;
 
     startTime: number;
+    updateTime: number;
     count: number;
     value: number;
 
@@ -19,6 +20,7 @@ export abstract class MetricBase implements IMetric {
         this.value = value ?? 0;
 
         this.startTime = startTime ?? Date.now();
+        this.updateTime = this.startTime;
         this.count = count ?? 0;
     }
 
@@ -29,5 +31,7 @@ export abstract class MetricBase implements IMetric {
         }
         this.count++;
         this.value = record.value;
+
+        this.updateTime = Date.now();
     }
 }
