@@ -1,5 +1,5 @@
-import { MetricsRecord } from "./MetricsRecord";
+import { MetricRecord } from "./MetricRecord";
 
-export interface IMetricsRecords {
-    [key: string]: MetricsRecord;
+export interface IMetricRecords {
+    [key: string]: MetricRecord;
 }

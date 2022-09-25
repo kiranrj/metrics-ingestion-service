@@ -1,4 +1,4 @@
-export enum MetricsType {
+export enum MetricType {
     METER,
     GAUGE,
     COUNTER

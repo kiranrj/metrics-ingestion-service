@@ -1,9 +1,9 @@
 import express, { Express, Request, Response } from 'express';
-import { MetricRecordService } from '../services/MetricsRecord.service';
+import { MetricRecordService } from '../services/MetricRecord.service';
 
 export const router = express.Router();
 
-export class MetricsRecordRoutes {
+export class MetricRecordRoutes {
     readonly app: Express;
     readonly service: MetricRecordService;
 

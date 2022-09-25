@@ -1,30 +1,30 @@
-import { MetricsRecord } from "../../common/models/MetricsRecord";
-import { IMetricsRecords } from "../../common/models/IMetricRecords";
-import { MetricsType } from "../../common/models/MetricsType";
+import { MetricRecord } from "../../common/models/MetricRecord";
+import { IMetricRecords } from "../../common/models/IMetricRecords";
+import { MetricType } from "../../common/models/MetricType";
 import { KafkaProducer } from "./KafkaProducer.service";
 
 export class MetricRecordService {
     private readonly kafkaProducer: KafkaProducer = new KafkaProducer();
 
     // dummy data for testing
-    private readonly metricRecords: IMetricsRecords = {
+    private readonly metricRecords: IMetricRecords = {
         "base.memory.usedHeap" : {
             level: "base",
             name: "memory.usedHeap",
-            type: MetricsType.GAUGE,
+            type: MetricType.GAUGE,
             value: 85632912
         }
     };
 
-    list = async(): Promise<IMetricsRecords> => {
+    list = async(): Promise<IMetricRecords> => {
         return this.metricRecords;
     }
 
-    get = async(name: string): Promise<MetricsRecord | null> => {
-        return this.metricRecords[name] as MetricsRecord;
+    get = async(name: string): Promise<MetricRecord | null> => {
+        return this.metricRecords[name] as MetricRecord;
     }
 
-    post = async(metricRecord: MetricsRecord) : Promise<void> => {
+    post = async(metricRecord: MetricRecord) : Promise<void> => {
         this.metricRecords[`${metricRecord.level}.${metricRecord.name}`] = metricRecord;
         await this.kafkaProducer.send(metricRecord);
     }

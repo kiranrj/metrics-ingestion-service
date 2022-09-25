@@ -1,5 +1,5 @@
 import { Kafka, Consumer, ConsumerSubscribeTopics, EachMessagePayload } from "kafkajs";
-import { MetricsRecord } from "../../common/models/MetricsRecord";
+import { MetricRecord } from "../../common/models/MetricRecord";
 
 export class KafkaConsumer {
     private consumer: Consumer;

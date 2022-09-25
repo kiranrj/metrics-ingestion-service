@@ -1,6 +1,6 @@
 
 import { Kafka, Producer } from "kafkajs";
-import { MetricsRecord } from "../../common/models/MetricsRecord";
+import { MetricRecord } from "../../common/models/MetricRecord";
 
 export class KafkaProducer {
     private kafka: Kafka;
@@ -21,7 +21,7 @@ export class KafkaProducer {
         console.log("Kafka producer connected");
     }
 
-    send = async(metricRecord: MetricsRecord): Promise<void> => {
+    send = async(metricRecord: MetricRecord): Promise<void> => {
         const message = JSON.stringify(metricRecord)
         console.log(`Kafka message: ${message}`);
         this.producer.send({

@@ -1,7 +1,7 @@
 import express, {Express, Request, Response} from 'express';
 import dotenv from 'dotenv';
-import { MetricsRecordRoutes } from './routes/MetricsRecord.route';
-import { MetricRecordService } from './services/MetricsRecord.service';
+import { MetricRecordRoutes } from './routes/MetricRecord.route';
+import { MetricRecordService } from './services/MetricRecord.service';
 
 dotenv.config();
 const port: number = parseInt(process.env.PORT as string);
@@ -14,7 +14,7 @@ const app: Express = express();
 app.use(express.json());
 
 // Init routes
-const route = new MetricsRecordRoutes(app, new MetricRecordService());
+const route = new MetricRecordRoutes(app, new MetricRecordService());
 
 app.get("/health/ping", (req: Request, res: Response) => {
     res.status(200).send("pong");

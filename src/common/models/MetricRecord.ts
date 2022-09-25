@@ -1,12 +1,12 @@
-import { MetricsType } from "./MetricsType";
+import { MetricType } from "./MetricType";
 
-export class MetricsRecord {
+export class MetricRecord {
     readonly level: string;
     readonly name: string;
-    readonly type: MetricsType;
+    readonly type: MetricType;
     readonly value: number;
 
-    constructor(level: string, name: string, type: MetricsType, value: number) {
+    constructor(level: string, name: string, type: MetricType, value: number) {
         this.level = level;
         this.name = name;
         this.type = type;
