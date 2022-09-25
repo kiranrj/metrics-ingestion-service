@@ -3,6 +3,8 @@ services:
     image: confluentinc/cp-zookeeper:latest
     ports:
     - 2181:2181
+    networks: 
+      - kafka_network
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
 
@@ -11,13 +13,23 @@ services:
     depends_on:
     - zookeeper
     ports:
-    - 9092:9092
+    - 29092:29092
+    networks: 
+    - kafka_network
+    # healthcheck:
+    #   test: ["CMD", "kafka-topics.sh", "--list", "--bootstrap-server", "kafka:9092"]
+    #   interval: 10s
+    #   timeout: 10s
+    #   retries: 5
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: CLIENT://:29092,INTERNAL://:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,CLIENT://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,CLIENT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      ALLOW_PLAINTEXT_LISTENER: yes
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -28,17 +40,18 @@ services:
     - ui
     ports:
     - 8080:8080
+    networks: 
+    - kafka_network
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
 
   metrics-ingest:
     image: metrics-ingest:latest
-    depends_on:
-    - zookeeper
-    - kafka
     ports:
     - 8000:8000
+    networks: 
+    - kafka_network
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
   
@@ -47,6 +60,11 @@ services:
     depends_on:
     - zookeeper
     - kafka
+    networks: 
+    - kafka_network
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
+networks:
+  kafka_network:
+    name: kafka_docker_network

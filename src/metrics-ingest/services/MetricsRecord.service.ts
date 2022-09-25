@@ -1,7 +1,8 @@
 import { MetricRecord } from "../../common/models/MetricRecord";
 import { IMetricRecords } from "../../common/models/IMetricRecords";
-import { MetricType } from "../../common/models/MetricType";
+import { MetricType } from "../../common/models/metrics/MetricType";
 import { KafkaProducer } from "./KafkaProducer.service";
+import { Utils } from "../../common/utils/Utils";
 
 export class MetricRecordService {
     private readonly kafkaProducer: KafkaProducer = new KafkaProducer();
@@ -25,7 +26,7 @@ export class MetricRecordService {
     }
 
     post = async(metricRecord: MetricRecord) : Promise<void> => {
-        this.metricRecords[`${metricRecord.level}.${metricRecord.name}`] = metricRecord;
+        this.metricRecords[Utils.getRecordKey(metricRecord)] = metricRecord;
         await this.kafkaProducer.send(metricRecord);
     }
 

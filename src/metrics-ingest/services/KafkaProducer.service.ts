@@ -1,6 +1,7 @@
 
 import { Kafka, Producer } from "kafkajs";
 import { MetricRecord } from "../../common/models/MetricRecord";
+import { Utils } from "../../common/utils/Utils"
 
 export class KafkaProducer {
     private kafka: Kafka;
@@ -13,7 +14,7 @@ export class KafkaProducer {
         console.log(`Kafka bootstrap server ${process.env.KAFKA_BOOTSTRAP_SERVERS}`);
         this.kafka = new Kafka({
             brokers: [process.env.KAFKA_BOOTSTRAP_SERVERS as string],
-            clientId: "metrics-ingestion-service",
+            clientId: "metrics-ingest",
             ssl: false
         });
         this.producer = this.kafka.producer();
@@ -27,7 +28,7 @@ export class KafkaProducer {
         this.producer.send({
             topic: process.env.KAFKA_TOPIC as string,
             messages: [{
-                key: `${metricRecord.level}.${metricRecord.name}`,
+                key: Utils.getRecordKey(metricRecord),
                 value: message
             }]
         });

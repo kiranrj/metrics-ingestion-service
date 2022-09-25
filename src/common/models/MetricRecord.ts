@@ -1,4 +1,4 @@
-import { MetricType } from "./MetricType";
+import { MetricType } from "./metrics/MetricType";
 
 export class MetricRecord {
     readonly level: string;

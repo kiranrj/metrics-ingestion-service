@@ -1,22 +1,24 @@
 import { Kafka, Consumer, ConsumerSubscribeTopics, EachMessagePayload } from "kafkajs";
 import { MetricRecord } from "../../common/models/MetricRecord";
+import { NewMetricRecordHandler } from "../handlers/NewMetricRecordHandler";
 
 export class KafkaConsumer {
-    private consumer: Consumer;
-    private kafka: Kafka;
+    readonly consumer: Consumer;
+    readonly kafka: Kafka;
+
     constructor() {
         console.log(`Kafka bootstrap server ${process.env.KAFKA_BOOTSTRAP_SERVERS}`);
         this.kafka = new Kafka({
             brokers: [process.env.KAFKA_BOOTSTRAP_SERVERS as string],
-            clientId: "metrics-aggregration",
+            clientId: "metrics-ensemble",
             ssl: false
         });
         this.consumer = this.kafka.consumer({
-            groupId: 'metrics-aggregration-consumner-group'
+            groupId: 'metrics-ensemble-consumner-group'
         });
     }
 
-    start = async(): Promise<void> => {
+    start = async(newRecordHandler: NewMetricRecordHandler): Promise<void> => {
         const topic: ConsumerSubscribeTopics = {
             topics: [process.env.KAFKA_TOPIC as string],
             fromBeginning: true
@@ -31,6 +33,7 @@ export class KafkaConsumer {
                     const {topic, partition, message} = kafkaMessage;
                     const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`
                     console.log(`- ${prefix} ${message.key}#${message.value}`)
+                    await newRecordHandler.handleNewMessage(message.key?.toString(), message.value?.toString());
                 }
             })
         } catch(e: any) {
