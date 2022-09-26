@@ -9,9 +9,9 @@ export class Timer extends MetricBase {
     sum: number;
 
     constructor(level: string, name: string, type: MetricType, value?: number, 
-        startTime?: number, min?: number, max?: number, mean?: number, sum?: number, count?: number) {
+        startTime?: number, min?: number, max?: number, mean?: number, sum?: number, count?: number, updateTime?: number) {
 
-        super(level, name, type, value, startTime, count);
+        super(level, name, type, value, startTime, count, updateTime);
 
         this.min = min ?? Number.MAX_SAFE_INTEGER;
         this.max = max ?? Number.MIN_SAFE_INTEGER;

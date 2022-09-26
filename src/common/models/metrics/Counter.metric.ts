@@ -4,9 +4,9 @@ import { MetricBase } from "./MetricBase";
 
 export class Counter extends MetricBase {
     constructor(level: string, name: string, type: MetricType, value?: number, 
-        startTime?: number, count?: number) {
+        startTime?: number, count?: number, updateTime?: number) {
 
-        super(level, name, type, value, startTime, count);
+        super(level, name, type, value, startTime, count, updateTime);
     }
 
     process(record: MetricRecord): void {

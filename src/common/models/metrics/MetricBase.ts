@@ -13,14 +13,14 @@ export abstract class MetricBase implements IMetric {
     value: number;
 
     constructor(level: string, name: string, type: MetricType, value?: number,
-        startTime?: number, count?: number) {
+        startTime?: number, count?: number, updateTime?: number) {
         this.level = level;
         this.name = name;
         this.type = type;
         this.value = value ?? 0;
 
         this.startTime = startTime ?? Date.now();
-        this.updateTime = this.startTime;
+        this.updateTime = updateTime ?? this.startTime;
         this.count = count ?? 0;
     }
 

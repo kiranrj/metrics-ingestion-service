@@ -5,20 +5,20 @@ import { IMetricsDao } from "./IMetricsDao";
 export class MetricsInmemoryDao implements IMetricsDao {
     inMemoryCache: Map<string, IMetric> = new Map();
     
-    list(): IMetric[] {
+    list = async(): Promise<IMetric[]> => {
         return [...this.inMemoryCache.values()];
     }
 
-    get(name: string): IMetric | undefined {
+    get = async(name: string): Promise<IMetric | undefined> => {
         return this.inMemoryCache.get(name);
     }
 
-    put(metric: IMetric): boolean {
+    put = async(metric: IMetric): Promise<boolean> => {
         const key = Utils.getMetricKey(metric);
         return this.inMemoryCache.set(key, metric).has(key);
     }
 
-    delete(name: string): boolean {
+    delete = async(name: string): Promise<boolean> => {
         return this.inMemoryCache.delete(name);
     }
 }

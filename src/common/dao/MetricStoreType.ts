@@ -1,4 +1,5 @@
 export enum MetricStoreType {
     INMEMORY = "INMEMORY",
-    KAKFA = "KAFKA"
+    KAKFA = "KAFKA",
+    REDIS = "REDIS"
 }

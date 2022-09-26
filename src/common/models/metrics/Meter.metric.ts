@@ -1,15 +1,16 @@
 import { MetricRecord } from "../MetricRecord";
 import { MetricType } from "./MetricType";
 import { MetricBase } from "./MetricBase";
+import { IMetric } from "./IMetric";
 
 export class Meter extends MetricBase {
 
     meanRate: number;
 
     constructor(level: string, name: string, type: MetricType, value?: number, 
-        startTime?: number, count?: number, meanRate?: number) {
+        startTime?: number, count?: number, meanRate?: number, updateTime?: number) {
 
-        super(level, name, type, value, startTime, count);
+        super(level, name, type, value, startTime, count, updateTime);
 
         this.meanRate = meanRate ?? 0;
     }

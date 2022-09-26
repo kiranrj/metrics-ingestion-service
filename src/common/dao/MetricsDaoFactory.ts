@@ -1,5 +1,6 @@
 import { IMetricsDao } from "./IMetricsDao";
 import { MetricsInmemoryDao } from "./MetricsInmemoryDao";
+import { MetricsRedisDao } from "./MetricsRedisDao";
 import { MetricStoreType } from "./MetricStoreType";
 
 export class MetricsDaoFactory {
@@ -10,7 +11,10 @@ export class MetricsDaoFactory {
             case MetricStoreType.INMEMORY:
                 dao = new MetricsInmemoryDao();
                 break;
-            case MetricStoreType.KAKFA:
+            case MetricStoreType.REDIS:
+                dao = new MetricsRedisDao();
+                break;
+            default:
                 throw new Error("Not implemented");
                 break;
         }
