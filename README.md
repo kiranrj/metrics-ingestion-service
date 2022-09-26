@@ -9,14 +9,14 @@ Managed as a [monorepo](https://en.wikipedia.org/wiki/Monorepo) with the followi
 
 ## Getting Started
 
-The easiest way to get going is using docker with the provided docker-compose file.
+The easiest way to get going is using docker with the provided [docker-compose](https://github.com/kiranrj/metrics-ingestion-service/blob/main/docker-compose.yml) file.
 ### Running in Docker
-Run the below npm script from repo root to build and create the docker images for all the services
+Run the below npm script command from repo root to build and create the docker images for all the services
 ```bash
 npm run distDocker
 ```
 
-And then start the containers, for the metrics services and dependent services
+And then start the containers for both metrics and dependent services
 ```bash
 docker-compose up
 ```
@@ -54,13 +54,13 @@ Following metric types are supported
 * **Timer**: Timing values and their stats vaklues like min, max and mean
 
 #### Supported data stores
-Store type can be configured via the `STORE` config and following are the supported store types
+Following are the supported store types and store type can be configured via the [STORE](https://github.com/kiranrj/metrics-ingestion-service/blob/main/.env#L5) config
 * **Redis**: Leveraged as a basic key-value store
 * **In-memory**: For testing and scope limited to aggregator service
 * ~~**Kafka**: Kafka streams KTable as the store~~. (To be implemented)
 
 ### Future work
-Since this is part of weekend quest learn Typescript, extensive frameworks have been deliberately avoided. And following is the wishlist for future work
+Since this is part of my weekend quest to learn Typescript, extensive frameworks have been intentionally avoided. And following is the wishlist for future work
 * Unit tests ([jest](https://jestjs.io/))
 * Websocket for metrics-api ([socket.io](https://socket.io/docs/v4/typescript/))
 * Kafka KTable as the store ([kafka-streams](https://www.npmjs.com/package/kafka-streams))
