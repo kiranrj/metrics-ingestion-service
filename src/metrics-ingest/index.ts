@@ -4,9 +4,9 @@ import { MetricRecordRoutes } from './routes/MetricsRecord.route';
 import { MetricRecordService } from './services/MetricsRecord.service';
 
 dotenv.config();
-const port: number = parseInt(process.env.PORT as string);
+const port: number = parseInt(process.env.INGEST_PORT as string);
 if (!port) {
-    console.log("PORT not specified. Exiting!");
+    console.log("PORT not specified INGEST service. Exiting!");
     process.exit(1);
 }
 
@@ -17,13 +17,12 @@ app.use(express.json());
 const route = new MetricRecordRoutes(app, new MetricRecordService());
 
 app.get("/health/ping", (req: Request, res: Response) => {
-    res.status(200).send("pong");
+    res.status(200).send("(ingestable) pong");
 })
 
-const server = app.listen(port, () => {
-    console.log(`⚡️ [server]: Server is running http://localhost:${port}`);
+app.listen(port, () => {
+    console.log(`⚡️ [server]: INGEST service running on http://localhost:${port}`);
 })
-console.log("Server started");
 
 process.on('SIGINT', () => {
     console.log("Interrupted");
