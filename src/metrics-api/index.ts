@@ -19,7 +19,7 @@ let metricsDaoFactory: MetricsDaoFactory = new MetricsDaoFactory();
 const route = new MetricRoutes(app, new MetricsService(metricsDaoFactory));
 
 app.get("/health/ping", (req: Request, res: Response) => {
-    res.status(200).send("pong to API");
+    res.status(200).send("pong (metrics-api service)");
 })
 
 app.listen(port, () => {

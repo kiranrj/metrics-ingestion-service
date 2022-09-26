@@ -17,7 +17,7 @@ app.use(express.json());
 const route = new MetricRecordRoutes(app, new MetricRecordService());
 
 app.get("/health/ping", (req: Request, res: Response) => {
-    res.status(200).send("(ingestable) pong");
+    res.status(200).send("pong (metrics-ingest service)");
 })
 
 app.listen(port, () => {
