@@ -32,7 +32,6 @@ export class KafkaConsumer {
                 eachMessage: async(kafkaMessage: EachMessagePayload) => {
                     const {topic, partition, message} = kafkaMessage;
                     const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`
-                    // console.log(`- ${prefix} ${message.key}#${message.value}`)
                     await newRecordHandler.handleNewMessage(message.key?.toString(), message.value?.toString());
                 }
             })

@@ -38,7 +38,6 @@ export class MetricsRedisDao implements IMetricsDao {
 
     get = async(name: string): Promise<IMetric | undefined> => {
         const value: string | null = await this.redis.get(name);
-        
         if (value) {
             return MetricFactory.metricFromJson(value);
         }

@@ -24,18 +24,14 @@ export class NewMetricRecordHandler {
         }
 
         const metricRecord: MetricRecord = JSON.parse(message);
+        const metricKey = key ?? Utils.getRecordKey(metricRecord);
 
-        let metricKey = key ?? Utils.getRecordKey(metricRecord);
-        let metric = await this.metricsDao.get(metricKey) as IMetric;
-        
-        if(!metric) {
-            metric = this.metricFactory.createMetric(metricRecord);
-        }
-        metric.process(metricRecord);
-
-        await this.metricsDao.put(metric);
-
-        // What better way to debug !!
-        console.log(await this.metricsDao.list())
+        this.metricsDao.get(metricKey)
+            .then(metric => metric || this.metricFactory.createMetric(metricRecord))
+            .then(metric => metric.process(metricRecord))
+            .then(metric => this.metricsDao.put(metric))
+            .catch(() => console.error(`Metrics aggregation failed for key ${metricKey}`))
+            .then(() => this.metricsDao.list()
+                    .then(metrics => console.log(metrics)));
     }
 }

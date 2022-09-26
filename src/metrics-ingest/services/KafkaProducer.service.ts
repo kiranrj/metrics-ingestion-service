@@ -22,15 +22,23 @@ export class KafkaProducer {
         console.log("Kafka producer connected");
     }
 
-    send = async(metricRecord: MetricRecord): Promise<void> => {
-        const message = JSON.stringify(metricRecord)
-        console.log(`Kafka message: ${message}`);
-        this.producer.send({
+    send = async(metricRecord: MetricRecord): Promise<boolean> => {
+        
+        const key = Utils.getRecordKey(metricRecord);
+        const message = JSON.stringify(metricRecord);
+
+        return this.producer.send({
             topic: process.env.KAFKA_TOPIC as string,
             messages: [{
-                key: Utils.getRecordKey(metricRecord),
+                key: key,
                 value: message
             }]
+        })
+        .then(rmd => {
+            console.log(`Message with key '${key}' written to Kafka '${rmd[0].topicName}##${rmd[0].partition}'`)
+            return new Promise<boolean>((resolve, reject) => {
+                (rmd != null) ? resolve(true) : reject(false);
+            })
         });
     };
 }

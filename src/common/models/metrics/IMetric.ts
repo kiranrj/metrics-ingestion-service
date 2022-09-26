@@ -6,5 +6,5 @@ export interface IMetric {
     name: string;
     type: MetricType;
 
-    process(record: MetricRecord) : void;
+    process(record: MetricRecord) : IMetric;
 }

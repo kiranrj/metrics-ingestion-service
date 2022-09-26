@@ -21,8 +21,13 @@ export class MetricRecordRoutes {
                     console.log("Empty input. Skipping");
                     throw new TypeError("ERROR: empty input");
                 }
-                await this.service.post(req.body);
-                res.status(200).send(`Record ${req.body.name} UPDATED`);
+                this.service
+                    .post(req.body)
+                    .then(k => res.status(200).send(`Record ${req.body.name} UPDATED`))
+                    .catch(e => {
+                        console.error("Failed to write message")
+                        res.status(500).send(e.message)
+                    });
             } catch (e: any) {
                 res.status(500).send(e.message);
             }

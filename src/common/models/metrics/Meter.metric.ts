@@ -15,9 +15,10 @@ export class Meter extends MetricBase {
         this.meanRate = meanRate ?? 0;
     }
 
-    process(record: MetricRecord): void {
+    process(record: MetricRecord): IMetric {
         super.process(record); 
         this.meanRate = (this.count == 1) ? 0 : this.getMeanRate();
+        return this;
     }
 
     getMeanRate(): number {

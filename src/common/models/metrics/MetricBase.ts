@@ -24,7 +24,7 @@ export abstract class MetricBase implements IMetric {
         this.count = count ?? 0;
     }
 
-    process(record: MetricRecord): void {
+    process(record: MetricRecord): IMetric {
         // Be sane, update what's yours
         if (this.level != record.level || this.name != record.name) {
             throw new Error("The metric record does not match the stored/cached metric. Check for is it's a key error?");
@@ -33,5 +33,7 @@ export abstract class MetricBase implements IMetric {
         this.value = record.value;
 
         this.updateTime = Date.now();
+        
+        return this;
     }
 }

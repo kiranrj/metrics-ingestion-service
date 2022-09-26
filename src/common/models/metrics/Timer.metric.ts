@@ -1,6 +1,7 @@
 import { MetricRecord } from "../MetricRecord";
 import { MetricType } from "./MetricType";
 import { MetricBase } from "./MetricBase";
+import { IMetric } from "./IMetric";
 
 export class Timer extends MetricBase {
     min: number;
@@ -20,12 +21,14 @@ export class Timer extends MetricBase {
         this.count = count ?? 0;
     }
 
-    process(record: MetricRecord): void {
+    process(record: MetricRecord): IMetric {
         super.process(record);
 
         this.min = Math.min(this.min, this.value);
         this.max = Math.max(this.max, this.value);
         this.sum += this.value;
         this.mean = this.sum/this.count;
+
+        return this;
     }
 }
